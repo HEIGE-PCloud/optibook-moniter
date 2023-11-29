@@ -10,15 +10,17 @@
     <script>
       function findUsernameWithMaxHourlyPnl(data) {
         // Find the index of the maximum hourly P&L
-        const maxHourlyPnlIndex = data.hourly_pnl.reduce(
-          (maxIndex, current, index, array) => {
-            return parseFloat(current) > parseFloat(array[maxIndex])
-              ? index
-              : maxIndex;
-          },
-          0
-        );
-
+        var maxHourlyPnlIndex = 0;
+        var maxHourlyPnl = parseFloat(data.hourly_pnl[0]);
+        for (var i = 0; i < data.hourly_pnl.length; i++) {
+          if (
+            parseFloat(data.hourly_pnl[i]) >
+            parseFloat(data.hourly_pnl[maxHourlyPnlIndex])
+          ) {
+            maxHourlyPnlIndex = i;
+            maxHourlyPnl = parseFloat(data.hourly_pnl[i]);
+          }
+        }
         // Use the index to find the corresponding username
         const usernameWithMaxHourlyPnl = data.users[maxHourlyPnlIndex];
 
